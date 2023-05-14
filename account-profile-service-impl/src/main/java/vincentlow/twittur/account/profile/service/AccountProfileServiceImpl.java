@@ -1,7 +1,5 @@
 package vincentlow.twittur.account.profile.service;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,5 +37,13 @@ public class AccountProfileServiceImpl implements AccountProfileService {
   public AccountProfile findAccountByUsername(String username) {
 
     return accountProfileRepository.findByUsernameAndMarkForDeleteFalse(username);
+  }
+
+  @Override
+  public void addTweetCount(String username) {
+
+    AccountProfile account = accountProfileRepository.findByUsernameAndMarkForDeleteFalse(username);
+    account.setTweetsCount(account.getTweetsCount() + 1);
+    accountProfileRepository.save(account);
   }
 }

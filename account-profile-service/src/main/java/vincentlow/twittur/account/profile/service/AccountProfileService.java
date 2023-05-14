@@ -12,4 +12,6 @@ public interface AccountProfileService {
   AccountProfile createAccountProfile(CreateAccountProfileRequest request);
 
   AccountProfile findAccountByUsername(String username);
+
+  void addTweetCount(String username);
 }

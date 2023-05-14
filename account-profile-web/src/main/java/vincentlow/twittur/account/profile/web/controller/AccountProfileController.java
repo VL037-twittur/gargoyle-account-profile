@@ -10,13 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 import vincentlow.twittur.account.profile.model.constant.ApiPath;
@@ -27,6 +21,7 @@ import vincentlow.twittur.account.profile.web.model.response.AccountProfileRespo
 import vincentlow.twittur.base.web.controller.BaseController;
 import vincentlow.twittur.base.web.model.response.PageMetaData;
 import vincentlow.twittur.base.web.model.response.api.ApiListResponse;
+import vincentlow.twittur.base.web.model.response.api.ApiResponse;
 import vincentlow.twittur.base.web.model.response.api.ApiSingleResponse;
 
 @Slf4j
@@ -36,12 +31,6 @@ public class AccountProfileController extends BaseController {
 
   @Autowired
   private AccountProfileService accountProfileService;
-
-  @GetMapping("/greet")
-  ResponseEntity<ApiSingleResponse<String>> greet() {
-
-    return toSuccessResponseEntity(toApiSingleResponse("Hello From GARGOYLE-ACCOUNT-PROFILE service"));
-  }
 
   @GetMapping
   public ResponseEntity<ApiListResponse<AccountProfileResponse>> getAccounts(
@@ -92,6 +81,19 @@ public class AccountProfileController extends BaseController {
       return toSuccessResponseEntity(toApiSingleResponse(response));
     } catch (RuntimeException e) {
       log.error("#AccountProfileController#getAccountByUsername ERROR! with username: {}, and error: {}", username,
+          e.getMessage(), e);
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
+
+  @PostMapping("/@{username}/add-tweet")
+  public ResponseEntity<ApiResponse> addTweetCount(@PathVariable String username) {
+
+    try {
+      accountProfileService.addTweetCount(username);
+      return toSuccessResponseEntity(successResponse);
+    } catch (RuntimeException e) {
+      log.error("#AccountProfileController#addTweetCount ERROR! with username: {}, and error: {}", username,
           e.getMessage(), e);
       throw new RuntimeException(e.getMessage(), e);
     }

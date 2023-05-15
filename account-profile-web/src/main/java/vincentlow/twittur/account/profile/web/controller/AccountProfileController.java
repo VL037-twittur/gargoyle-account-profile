@@ -99,4 +99,17 @@ public class AccountProfileController extends BaseController {
     }
   }
 
+  @PostMapping("/@{username}/subtract-tweet")
+  public ResponseEntity<ApiResponse> subtractTweetCount(@PathVariable String username) {
+
+    try {
+      accountProfileService.subtractTweetCount(username);
+      return toSuccessResponseEntity(successResponse);
+    } catch (RuntimeException e) {
+      log.error("#AccountProfileController#subtractTweetCount ERROR! with username: {}, and error: {}", username,
+          e.getMessage(), e);
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
+
 }

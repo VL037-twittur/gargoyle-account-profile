@@ -14,4 +14,6 @@ public interface AccountProfileService {
   AccountProfile findAccountByUsername(String username);
 
   void addTweetCount(String username);
+
+  void subtractTweetCount(String username);
 }

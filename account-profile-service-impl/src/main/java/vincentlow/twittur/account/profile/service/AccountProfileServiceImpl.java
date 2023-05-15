@@ -46,4 +46,12 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     account.setTweetsCount(account.getTweetsCount() + 1);
     accountProfileRepository.save(account);
   }
+
+  @Override
+  public void subtractTweetCount(String username) {
+
+    AccountProfile account = accountProfileRepository.findByUsernameAndMarkForDeleteFalse(username);
+    account.setTweetsCount(account.getTweetsCount() - 1);
+    accountProfileRepository.save(account);
+  }
 }

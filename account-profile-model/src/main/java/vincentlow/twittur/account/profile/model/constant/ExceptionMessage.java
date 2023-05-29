@@ -10,7 +10,9 @@ public interface ExceptionMessage {
 
   String ACCOUNT_NOT_FOUND = "account not found";
 
-  String USERNAME_IS_TAKEN = "username is taken";
+  String FOLLOWER_ACCOUNT_NOT_FOUND = "follower account not found";
 
-  String USERNAME_MUST_BE_DIFFERENT = "username must be different";
+  String FOLLOWED_ACCOUNT_NOT_FOUND = "followed account not found";
+
+  String ALREADY_FOLLOWED_THE_ACCOUNT = "already followed the account";
 }

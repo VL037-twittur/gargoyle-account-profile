@@ -1,6 +1,9 @@
 package vincentlow.twittur.account.profile.service;
 
-import static vincentlow.twittur.account.profile.util.ValidatorUtil.*;
+import static vincentlow.twittur.account.profile.util.ValidatorUtil.validateAccount;
+import static vincentlow.twittur.account.profile.util.ValidatorUtil.validateArgument;
+import static vincentlow.twittur.account.profile.util.ValidatorUtil.validateRelationship;
+import static vincentlow.twittur.account.profile.util.ValidatorUtil.validateState;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,13 +54,15 @@ public class AccountProfileServiceImpl implements AccountProfileService {
   @Override
   public AccountProfile findAccountByUsername(String username) {
 
-    return accountProfileRepository.findByUsernameAndMarkForDeleteFalse(username);
+    AccountProfile account = accountProfileRepository.findByUsernameAndMarkForDeleteFalse(username);
+    return validateAccount(account, ExceptionMessage.ACCOUNT_NOT_FOUND);
   }
 
   @Override
   public AccountProfile findAccountById(String id) {
 
-    return accountProfileRepository.findByIdAndMarkForDeleteFalse(id);
+    AccountProfile account = accountProfileRepository.findByIdAndMarkForDeleteFalse(id);
+    return validateAccount(account, ExceptionMessage.ACCOUNT_NOT_FOUND);
   }
 
   @Override
